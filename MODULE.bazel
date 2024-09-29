@@ -21,3 +21,17 @@ maven.install(
 )
 
 use_repo(maven, "maven")
+
+bazel_dep(name = "gazelle", version = "0.39.0", dev_dependency = True)
+bazel_dep(name = "rules_go", version = "0.50.1", dev_dependency = True)
+
+
+go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+
+go_deps.from_file(go_mod = "//:go.mod")
+
+# All *direct* Go dependencies of the module have to be listed explicitly.
+use_repo(
+    go_deps,
+    "build_aspect_cli",
+)
