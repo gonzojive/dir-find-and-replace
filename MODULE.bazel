@@ -30,8 +30,14 @@ go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 
 go_deps.from_file(go_mod = "//:go.mod")
 
-# All *direct* Go dependencies of the module have to be listed explicitly.
-use_repo(
-    go_deps,
-    "build_aspect_cli",
+bazel_dep(name = "gazelle_kotlin", version = "0.0.1")
+local_path_override(
+    module_name = "gazelle_kotlin",
+    path = "../gazelle-kotlin",
 )
+
+# All *direct* Go dependencies of the module have to be listed explicitly.
+#use_repo(
+#    go_deps,
+#    "build_aspect_cli",
+#)
