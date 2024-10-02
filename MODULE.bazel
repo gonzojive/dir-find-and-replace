@@ -14,26 +14,29 @@ maven.install(
         "com.google.truth:truth:1.1.2",
         "junit:junit:4.13.2",
     ],
+    lock_file = "//:maven_install.json",
     repositories = [
         "https://repo1.maven.org/maven2",
     ],
-    lock_file = "//:maven_install.json",
 )
-
 use_repo(maven, "maven")
 
 bazel_dep(name = "gazelle", version = "0.39.0", dev_dependency = True)
 bazel_dep(name = "rules_go", version = "0.50.1", dev_dependency = True)
 
-
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
-
 go_deps.from_file(go_mod = "//:go.mod")
 
 bazel_dep(name = "gazelle_kotlin", version = "0.0.1")
 local_path_override(
     module_name = "gazelle_kotlin",
     path = "../gazelle-kotlin",
+)
+
+go_deps.archive_override(
+    path = "github.com/bazel-contrib/rules_jvm",
+    sha256 = "ce78a0ead3e9609e28a2227b0a12eaf20581321c844bec0d9133616627ad823d",
+    urls = ["http://localhost:8674/by-sha256/ce78a0ead3e9609e28a2227b0a12eaf20581321c844bec0d9133616627ad823d.zip"],
 )
 
 # All *direct* Go dependencies of the module have to be listed explicitly.

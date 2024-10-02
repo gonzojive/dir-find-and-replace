@@ -1,10 +1,12 @@
 load("@gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 # gazelle:prefix github.com/bazel-gazelle/tests/bcr
-gazelle(name = "gazelle")
-
 gazelle_binary(
-    name = "gazelle_kotlin_binary",
-    languages = ["@gazelle_kotlin//gazelle/kotlin:kotlin"],
+    name = "gazelle",
+    languages = [
+        "@gazelle_kotlin//gazelle/kotlin:kotlin",
+        "@gazelle//language/go",
+        "@gazelle//language/proto",
+    ],
     visibility = ["//visibility:private"],
 )
